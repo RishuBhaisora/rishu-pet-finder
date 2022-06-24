@@ -1,12 +1,7 @@
-
-import PetTypes from './components/PetTypes'
+import PetTypes from "./components/PetTypes";
 
 function App() {
-
-
-  return (
-    <PetTypes></PetTypes>
-  )
+  return <PetTypes></PetTypes>;
 }
 
-export default App
+export default App;

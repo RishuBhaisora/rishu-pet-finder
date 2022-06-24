@@ -1,17 +1,26 @@
 import { FC, memo, useEffect } from "react";
 import { connect } from "react-redux";
 import { petsTypeFetch } from "../action";
+import { petTypeSelector } from "../selectors";
+import { State } from "../store";
 
 type PetTypesProps = {
+  petTypes: any[];
   fetchPetTypes: () => void;
 };
 
-const PetTypes: FC<PetTypesProps> = ({ fetchPetTypes }) => {
-  useEffect(() => {}, []);
-  const fetchTypes = () => {
+const PetTypes: FC<PetTypesProps> = ({ petTypes, fetchPetTypes }) => {
+  useEffect(() => {
     fetchPetTypes();
-  };
-  return <button onClick={fetchTypes}>PET TYPES</button>;
+  }, []);
+
+  return (
+    <ul>
+      {petTypes.map((p) => (
+        <li key={p.cell}>{p.name.first}</li>
+      ))}
+    </ul>
+  );
 };
 
 PetTypes.defaultProps = {};
@@ -20,4 +29,8 @@ const mapDispatchToProps = {
   fetchPetTypes: petsTypeFetch,
 };
 
-export default connect(undefined, mapDispatchToProps)(memo(PetTypes));
+const mapStateToProps = (s: State) => {
+  return { petTypes: petTypeSelector(s) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(memo(PetTypes));
